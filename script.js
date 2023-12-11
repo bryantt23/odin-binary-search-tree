@@ -137,6 +137,63 @@ class Tree {
     }
     return null;
   };
+  levelOrderIterative = cb => {
+    const q = [];
+    q.push(this.root);
+    const res = [];
+    while (q.length > 0) {
+      const size = q.length;
+      for (let i = 0; i < size; i++) {
+        const curNode = q.shift();
+        if (curNode.left !== null) {
+          q.push(curNode.left);
+        }
+        if (curNode.right !== null) {
+          q.push(curNode.right);
+        }
+        if (cb) {
+          cb(curNode);
+        } else {
+          res.push(curNode.value);
+        }
+      }
+    }
+    if (!cb) {
+      return res;
+    }
+  };
+  levelOrderRecursive = cb => {
+    const map = new Map();
+    this.levelOrderRecursiveHelper(this.root, 1, map);
+    console.log('🚀 ~ file: script.js:167 ~ Tree ~ map:', map);
+    let level = 1;
+    const res = [];
+    while (map.has(level)) {
+      const arr = map.get(level++);
+      for (const node of arr) {
+        if (cb) {
+          cb(node);
+        } else {
+          res.push(node.value);
+        }
+      }
+    }
+    if (!cb) {
+      return res;
+    }
+  };
+  levelOrderRecursiveHelper = (cur, level, map) => {
+    if (!map.has(level)) {
+      map.set(level, []);
+    }
+    map.get(level).push(cur);
+    if (cur.left !== null) {
+      this.levelOrderRecursiveHelper(cur.left, level + 1, map);
+    }
+    if (cur.right !== null) {
+      this.levelOrderRecursiveHelper(cur.right, level + 1, map);
+    }
+  };
 }
 
 let arr = [1, 2, 3];
@@ -160,7 +217,14 @@ tree.delete(29);
 tree.prettyPrint();
 console.log(tree.find(7));
 console.log(tree.find(73));
-
+console.log(tree.levelOrderIterative());
+tree.levelOrderIterative(({ value }) => {
+  console.log(`value: ${value}`);
+});
+console.log(tree.levelOrderRecursive());
+tree.levelOrderRecursive(({ value }) => {
+  console.log(`value: ${value}`);
+});
 // arr = [
 //   27, 53, 98, 69, 40, 62, 55, 85, 70, 44, 97, 15, 32, 65, 73, 39, 43, 36, 30,
 //   68, 33
