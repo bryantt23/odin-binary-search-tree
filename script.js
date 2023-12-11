@@ -89,6 +89,7 @@ class Tree {
     }
     //2 children
     else if (curNode.left !== null && curNode.right !== null) {
+      this.deleteNodeWith2Children(curNode);
     }
     //1 child
     else {
@@ -99,6 +100,28 @@ class Tree {
         curNode.value = curNode.right.value;
         curNode.right = null;
       }
+    }
+  };
+  deleteNodeWith2Children = nodeToDelete => {
+    const value = nodeToDelete.value;
+    let curNode = this.root,
+      inorderSuccessorNode = null,
+      parentOfInorderSuccessorNode = null;
+    while (curNode !== null) {
+      if (curNode.value > value) {
+        parentOfInorderSuccessorNode = inorderSuccessorNode;
+        inorderSuccessorNode = curNode;
+        curNode = curNode.left;
+      } else {
+        curNode = curNode.right;
+      }
+    }
+
+    nodeToDelete.value = inorderSuccessorNode.value;
+    if (inorderSuccessorNode.value < parentOfInorderSuccessorNode.value) {
+      parentOfInorderSuccessorNode.left = null;
+    } else {
+      parentOfInorderSuccessorNode.right = null;
     }
   };
 }
@@ -119,6 +142,8 @@ tree.prettyPrint();
 tree.delete(55);
 tree.prettyPrint();
 tree.delete(33);
+tree.prettyPrint();
+tree.delete(29);
 tree.prettyPrint();
 
 // arr = [
