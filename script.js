@@ -44,6 +44,24 @@ class Tree {
       this.prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
     }
   };
+  insert = value => {
+    let curNode = this.root;
+    while (true) {
+      if (curNode.value > value) {
+        if (curNode.left === null) {
+          curNode.left = new Node(value);
+          break;
+        }
+        curNode = curNode.left;
+      } else {
+        if (curNode.right === null) {
+          curNode.right = new Node(value);
+          break;
+        }
+        curNode = curNode.right;
+      }
+    }
+  };
 }
 
 let arr = [1, 2, 3];
@@ -52,9 +70,17 @@ tree.prettyPrint();
 arr = [57, 8, 33, 55, 29, 7, 72, 9, 71, 20];
 tree = new Tree(arr);
 tree.prettyPrint();
-arr = [
-  27, 53, 98, 69, 40, 62, 55, 85, 70, 44, 97, 15, 32, 65, 73, 39, 43, 36, 30,
-  68, 33
-];
-tree = new Tree(arr);
+
+tree.insert(30);
 tree.prettyPrint();
+tree.insert(1);
+tree.prettyPrint();
+tree.insert(23);
+tree.prettyPrint();
+
+// arr = [
+//   27, 53, 98, 69, 40, 62, 55, 85, 70, 44, 97, 15, 32, 65, 73, 39, 43, 36, 30,
+//   68, 33
+// ];
+// tree = new Tree(arr);
+// tree.prettyPrint();
