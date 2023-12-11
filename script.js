@@ -209,6 +209,37 @@ class Tree {
     res.push(...this.inorder(cb, curNode.right));
     return res;
   };
+  preorder = (cb, curNode = this.root) => {
+    //bc
+    if (curNode === null) {
+      return [];
+    }
+    const res = [];
+    if (cb) {
+      cb(curNode);
+    } else {
+      res.push(curNode.value);
+    }
+
+    res.push(...this.preorder(cb, curNode.left));
+    res.push(...this.preorder(cb, curNode.right));
+    return res;
+  };
+  postorder = (cb, curNode = this.root) => {
+    //bc
+    if (curNode === null) {
+      return [];
+    }
+    const res = this.postorder(cb, curNode.left);
+    res.push(...this.postorder(cb, curNode.right));
+    if (cb) {
+      cb(curNode);
+    } else {
+      res.push(curNode.value);
+    }
+
+    return res;
+  };
 }
 
 let arr = [1, 2, 3];
@@ -242,6 +273,14 @@ tree.levelOrderRecursive(({ value }) => {
 });
 console.log(tree.inorder());
 tree.inorder(({ value }) => {
+  console.log(`value: ${value}`);
+});
+console.log(tree.preorder());
+tree.preorder(({ value }) => {
+  console.log(`value: ${value}`);
+});
+console.log(tree.postorder());
+tree.postorder(({ value }) => {
   console.log(`value: ${value}`);
 });
 // arr = [
