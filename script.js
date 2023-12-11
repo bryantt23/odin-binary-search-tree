@@ -165,7 +165,6 @@ class Tree {
   levelOrderRecursive = cb => {
     const map = new Map();
     this.levelOrderRecursiveHelper(this.root, 1, map);
-    console.log('🚀 ~ file: script.js:167 ~ Tree ~ map:', map);
     let level = 1;
     const res = [];
     while (map.has(level)) {
@@ -193,6 +192,22 @@ class Tree {
     if (cur.right !== null) {
       this.levelOrderRecursiveHelper(cur.right, level + 1, map);
     }
+  };
+  inorder = (cb, curNode = this.root) => {
+    //bc
+    if (curNode === null) {
+      return [];
+    }
+
+    const res = this.inorder(cb, curNode.left);
+    if (cb) {
+      cb(curNode);
+    } else {
+      res.push(curNode.value);
+    }
+
+    res.push(...this.inorder(cb, curNode.right));
+    return res;
   };
 }
 
@@ -223,6 +238,10 @@ tree.levelOrderIterative(({ value }) => {
 });
 console.log(tree.levelOrderRecursive());
 tree.levelOrderRecursive(({ value }) => {
+  console.log(`value: ${value}`);
+});
+console.log(tree.inorder());
+tree.inorder(({ value }) => {
   console.log(`value: ${value}`);
 });
 // arr = [
