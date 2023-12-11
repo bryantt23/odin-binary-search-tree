@@ -318,9 +318,53 @@ console.log(tree.isBalanced());
 tree.rebalance();
 tree.prettyPrint();
 console.log(tree.isBalanced());
-// arr = [
-//   27, 53, 98, 69, 40, 62, 55, 85, 70, 44, 97, 15, 32, 65, 73, 39, 43, 36, 30,
-//   68, 33
-// ];
-// tree = new Tree(arr);
-// tree.prettyPrint();
+
+// Function to generate an array of random numbers
+function generateRandomArray(size, max) {
+  return Array.from({ length: size }, () => Math.floor(Math.random() * max));
+}
+
+// Driver script
+function driverScript() {
+  // Create a binary search tree from an array of random numbers < 100
+  const randomArray = generateRandomArray(10, 100);
+  const tree = new Tree(randomArray);
+  console.log('Initial Tree:');
+  tree.prettyPrint();
+
+  // Confirm that the tree is balanced
+  console.log('Is the tree balanced? ', tree.isBalanced());
+
+  // Print out all elements in level, pre, post, and in order
+  console.log('Level Order:', tree.levelOrderIterative());
+  console.log('Pre Order:', tree.preorder());
+  console.log('Post Order:', tree.postorder());
+  console.log('In Order:', tree.inorder());
+
+  // Unbalance the tree by adding several numbers > 100
+  tree.insert(101);
+  tree.insert(102);
+  tree.insert(103);
+  console.log('Tree After Adding Elements > 100:');
+  tree.prettyPrint();
+
+  // Confirm that the tree is unbalanced
+  console.log('Is the tree balanced after additions? ', tree.isBalanced());
+
+  // Balance the tree by calling rebalance
+  tree.rebalance();
+  console.log('Tree After Rebalancing:');
+  tree.prettyPrint();
+
+  // Confirm that the tree is balanced
+  console.log('Is the tree balanced after rebalancing? ', tree.isBalanced());
+
+  // Print out all elements in level, pre, post, and in order
+  console.log('Level Order After Rebalancing:', tree.levelOrderIterative());
+  console.log('Pre Order After Rebalancing:', tree.preorder());
+  console.log('Post Order After Rebalancing:', tree.postorder());
+  console.log('In Order After Rebalancing:', tree.inorder());
+}
+
+// Running the driver script
+driverScript();
