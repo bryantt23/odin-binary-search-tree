@@ -124,6 +124,19 @@ class Tree {
       parentOfInorderSuccessorNode.right = null;
     }
   };
+  find = value => {
+    let curNode = this.root;
+    while (curNode !== null) {
+      if (curNode.value > value) {
+        curNode = curNode.left;
+      } else if (curNode.value < value) {
+        curNode = curNode.right;
+      } else {
+        return curNode;
+      }
+    }
+    return null;
+  };
 }
 
 let arr = [1, 2, 3];
@@ -145,6 +158,8 @@ tree.delete(33);
 tree.prettyPrint();
 tree.delete(29);
 tree.prettyPrint();
+console.log(tree.find(7));
+console.log(tree.find(73));
 
 // arr = [
 //   27, 53, 98, 69, 40, 62, 55, 85, 70, 44, 97, 15, 32, 65, 73, 39, 43, 36, 30,
