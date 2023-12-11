@@ -62,6 +62,26 @@ class Tree {
       }
     }
   };
+  delete = value => {
+    let curNode = this.root;
+    let parentNode = null;
+    while (curNode.value !== value) {
+      parentNode = curNode;
+      if (curNode.value > value) {
+        curNode = curNode.left;
+      } else {
+        curNode = curNode.right;
+      }
+    }
+    //leaf
+    if (curNode.left === null && curNode.right === null) {
+      if (value < parentNode.value) {
+        parentNode.left = null;
+      } else {
+        parentNode.right = null;
+      }
+    }
+  };
 }
 
 let arr = [1, 2, 3];
@@ -76,6 +96,8 @@ tree.prettyPrint();
 tree.insert(1);
 tree.prettyPrint();
 tree.insert(23);
+tree.prettyPrint();
+tree.delete(55);
 tree.prettyPrint();
 
 // arr = [
