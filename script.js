@@ -240,11 +240,41 @@ class Tree {
 
     return res;
   };
+  height = (cur = this.root) => {
+    //bc
+    if (cur === null) {
+      return 0;
+    }
+    return Math.max(this.height(cur.left), this.height(cur.right)) + 1;
+  };
+  isBalanced = () => {
+    const res = this.isBalancedHelper();
+    return res === -1 ? false : true;
+  };
+  isBalancedHelper = (cur = this.root) => {
+    //bc
+    if (cur === null) {
+      return 0;
+    }
+    const left = this.isBalancedHelper(cur.left),
+      right = this.isBalancedHelper(cur.right);
+    if (left === -1 || right === -1 || Math.abs(left - right) > 1) {
+      return -1;
+    } else {
+      return Math.max(this.height(cur.left), this.height(cur.right)) + 1;
+    }
+  };
+  rebalance = () => {
+    const arr = this.inorder();
+    const balancedTree = this.buildTree(arr);
+    this.root = balancedTree;
+  };
 }
 
 let arr = [1, 2, 3];
 let tree = new Tree(arr);
 tree.prettyPrint();
+console.log(tree.isBalanced());
 arr = [57, 8, 33, 55, 29, 7, 72, 9, 71, 20];
 tree = new Tree(arr);
 tree.prettyPrint();
@@ -283,6 +313,11 @@ console.log(tree.postorder());
 tree.postorder(({ value }) => {
   console.log(`value: ${value}`);
 });
+console.log(tree.height());
+console.log(tree.isBalanced());
+tree.rebalance();
+tree.prettyPrint();
+console.log(tree.isBalanced());
 // arr = [
 //   27, 53, 98, 69, 40, 62, 55, 85, 70, 44, 97, 15, 32, 65, 73, 39, 43, 36, 30,
 //   68, 33
