@@ -73,12 +73,31 @@ class Tree {
         curNode = curNode.right;
       }
     }
+
+    //doesn't exist
+    if (curNode === null) {
+      return;
+    }
+
     //leaf
     if (curNode.left === null && curNode.right === null) {
       if (value < parentNode.value) {
         parentNode.left = null;
       } else {
         parentNode.right = null;
+      }
+    }
+    //2 children
+    else if (curNode.left !== null && curNode.right !== null) {
+    }
+    //1 child
+    else {
+      if (curNode.left !== null) {
+        curNode.value = curNode.left.value;
+        curNode.left = null;
+      } else {
+        curNode.value = curNode.right.value;
+        curNode.right = null;
       }
     }
   };
@@ -98,6 +117,8 @@ tree.prettyPrint();
 tree.insert(23);
 tree.prettyPrint();
 tree.delete(55);
+tree.prettyPrint();
+tree.delete(33);
 tree.prettyPrint();
 
 // arr = [
